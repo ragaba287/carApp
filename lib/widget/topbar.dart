@@ -16,6 +16,7 @@ class TopBar extends StatelessWidget {
           splashColor: Colors.white,
           disabledColor: Colors.grey,
           hoverColor: Colors.white,
+          color: Colors.white,
           iconSize: 34,
           icon: Icon(Icons.arrow_back_ios_outlined),
           onPressed: back,
@@ -25,13 +26,9 @@ class TopBar extends StatelessWidget {
           style: TextStyle(
               color: Colors.white, fontSize: 34, fontWeight: FontWeight.bold),
         ),
-        IconButton(
-            color: Colors.white,
-            hoverColor: Colors.white,
-            disabledColor: Colors.grey,
-            iconSize: 34,
-            icon: Icon(Icons.arrow_forward_ios),
-            onPressed: onpress),
+        SizedBox(
+          width: 34,
+        )
       ],
     );
   }

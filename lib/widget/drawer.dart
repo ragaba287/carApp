@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_car_service/screens/contactUs.dart';
+import 'package:flutter_application_car_service/screens/WishDetails.dart';
 import 'package:flutter_application_car_service/screens/home.dart';
-import 'package:flutter_application_car_service/screens/settings.dart';
+import 'package:flutter_application_car_service/screens/myorders.dart';
 
 class Drawer1 extends StatelessWidget {
   @override
@@ -64,7 +64,7 @@ class Drawer1 extends StatelessWidget {
                                   children: [
                                     Text(
                                       "bmw Series",
-                                      style: TextStyle(color: Colors.brown),
+                                      style: TextStyle(color: Colors.red),
                                     ),
                                   ],
                                 ),
@@ -77,8 +77,10 @@ class Drawer1 extends StatelessWidget {
                           ),
                         ]),
                     ListTile(
-                      leading: Icon(Icons.home),
-                      title: Text("Home"),
+                      title: Text(
+                        "Home",
+                        style: TextStyle(color: Colors.blue),
+                      ),
                       onTap: () {
                         Navigator.pushReplacement(context,
                             MaterialPageRoute(builder: (context) {
@@ -87,24 +89,37 @@ class Drawer1 extends StatelessWidget {
                       },
                     ),
                     ListTile(
-                      leading: Icon(Icons.settings),
-                      title: Text("Settings"),
+                      title: Text(
+                        "My Orders",
+                        style: TextStyle(color: Colors.blue),
+                      ),
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return Settings();
+                          return MyOrders();
                         }));
                       },
                     ),
                     ListTile(
-                      leading: Icon(Icons.contacts),
-                      title: Text("Contact Us"),
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return ContactUs();
-                        }));
-                      },
+                      title: Text(
+                        "Points",
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      title: Text(
+                        "Ratings",
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      title: Text(
+                        "Log Out",
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                      onTap: () {},
                     ),
                   ],
                 ),

@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class RatingReview extends StatelessWidget {
-  final double rating = 10;
+  final double rating = 5;
 
   @override
   Widget build(BuildContext context) {

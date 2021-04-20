@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_car_service/widget/appBaar.dart';
 import 'package:flutter_application_car_service/widget/drawer.dart';
 import 'package:flutter_application_car_service/widget/ratingbar.dart';
+import 'package:flutter_application_car_service/widget/reviewItem.dart';
 
 class Review extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -53,48 +54,18 @@ class Review extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      height: MediaQuery.of(context).size.height * .25,
-                      padding: EdgeInsets.only(top: 20),
-                      margin: EdgeInsets.all(10),
-                      child: Card(
-                          elevation: 10,
-                          shadowColor: Colors.grey,
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  RatingReview(),
-                                  Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Text(
-                                          'AMAR REZQ',
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text('Bmw  x srries '),
-                                      ]),
-                                  Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: CircleAvatar(
-                                      backgroundColor: Colors.deepPurple,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                  child: Text(
-                                'If the content is legitimately bigger than the',
-                                textDirection: TextDirection.rtl,
-                                maxLines: 3,
-                              ))
-                            ],
-                          )),
-                    )
+                        height: MediaQuery.of(context).size.height * 0.776,
+                        padding: EdgeInsets.only(top: 20),
+                        margin: EdgeInsets.all(10),
+                        child: ListView(
+                          children: [
+                            ReviewItem(),
+                            ReviewItem(),
+                            ReviewItem(),
+                            ReviewItem(),
+                            ReviewItem(),
+                          ],
+                        ))
                   ],
                 ),
               ),

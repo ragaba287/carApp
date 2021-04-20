@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_car_service/screens/authentication.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,6 +12,8 @@ class Singup extends StatefulWidget {
 }
 
 class _SingupState extends State<Singup> {
+  var _formKey = GlobalKey<FormState>();
+  String name, password, email, phone;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,6 +55,7 @@ class _SingupState extends State<Singup> {
                     borderRadius: BorderRadius.all(Radius.circular(40)),
                   ),
                   child: Form(
+                    key: _formKey,
                     child: SingleChildScrollView(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -59,7 +64,9 @@ class _SingupState extends State<Singup> {
                             height: 15,
                           ),
                           TextFormField(
-                            keyboardType: TextInputType.emailAddress,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            keyboardType: TextInputType.text,
                             enabled: true,
                             decoration: InputDecoration(
                               prefixIcon: Icon(Icons.person),
@@ -68,12 +75,34 @@ class _SingupState extends State<Singup> {
                                 borderRadius: BorderRadius.circular(30),
                               ),
                             ),
+                            onChanged: (value) {
+                              setState(() {
+                                name = value;
+                              });
+                            },
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return 'This field is required';
+                              } else if (value.length < 3 ||
+                                  value.length > 8 ||
+                                  !RegExp('[a-zA-Z]').hasMatch(value)) {
+                                return ' valid Name  should between 3 and 8 characters';
+                              }
+                              return null;
+                            },
                           ),
                           SizedBox(
                             height: 15,
                           ),
                           TextFormField(
-                            obscureText: true,
+                            onChanged: (val) {
+                              setState(() {
+                                email = val;
+                              });
+                            },
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                               prefixIcon: Icon(Icons.email),
                               suffixIcon: Icon(Icons.person),
@@ -82,11 +111,30 @@ class _SingupState extends State<Singup> {
                                 borderRadius: BorderRadius.circular(30),
                               ),
                             ),
+                            validator: (emailvalue) {
+                              if (emailvalue.isEmpty) {
+                                return 'This field is required';
+                              }
+                              if (!emailvalue.contains('@')) {
+                                return " valid email should contain '@'";
+                              }
+                              if (!RegExp(
+                                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                              ).hasMatch(emailvalue)) {
+                                return "Please enter a valid email";
+                              }
+                              return null;
+                            },
                           ),
                           SizedBox(
                             height: 15,
                           ),
                           TextFormField(
+                            onChanged: (v) {
+                              setState(() {
+                                password = v;
+                              });
+                            },
                             obscureText: true,
                             decoration: InputDecoration(
                               prefixIcon: Icon(Icons.lock),
@@ -96,11 +144,26 @@ class _SingupState extends State<Singup> {
                                 borderRadius: BorderRadius.circular(30),
                               ),
                             ),
+                            validator: (passwordvalue) {
+                              if (passwordvalue.isEmpty) {
+                                return 'This field is required';
+                              }
+                              if (passwordvalue.length < 8) {
+                                return 'Password should have at least 6 characters';
+                              }
+
+                              return null;
+                            },
                           ),
                           SizedBox(
                             height: 15,
                           ),
                           TextFormField(
+                            onChanged: (a) {
+                              setState(() {
+                                phone = a;
+                              });
+                            },
                             obscureText: true,
                             decoration: InputDecoration(
                               prefixIcon: Icon(Icons.mobile_friendly),
@@ -121,10 +184,8 @@ class _SingupState extends State<Singup> {
                                   borderRadius: BorderRadius.circular(30)),
                               elevation: 9,
                               onPressed: () {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (_) {
-                                  return Car();
-                                }));
+                                _submit();
+                                //EasyLocalization.of(context).locale =Locale('en', 'US');
                               },
                               color: Colors.red[400],
                               child: Text(
@@ -246,5 +307,22 @@ class _SingupState extends State<Singup> {
         ),
       ),
     );
+  }
+
+  Future<void> _submit() async {
+    final isValid = _formKey.currentState.validate();
+    if (!isValid) {
+      return;
+    }
+    Dio dio = Dio();
+    String base_url =
+        "http://10.0.0.0/laundry/api/v1/users/create?api_password= RjikEbtcypXTao7a38NWb";
+    var response = await dio.post(base_url, data: {
+      'name': name,
+      'email': email,
+      'phone': phone,
+      'password': password
+    });
+    print(response);
   }
 }

@@ -48,7 +48,7 @@ class _NewserveceState extends State<Newservece> {
                     topRight: Radius.circular(30)),
                 color: Colors.white,
               ),
-              height: MediaQuery.of(context).size.height * .65,
+              height: MediaQuery.of(context).size.height * 0.65,
               child: BottomModel(),
             ),
           ]),

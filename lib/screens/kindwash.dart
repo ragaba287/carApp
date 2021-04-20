@@ -50,6 +50,7 @@ class Kindwash extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: Container(
                 height: MediaQuery.of(context).size.height * .6,
+                padding: EdgeInsets.only(top: 10),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(30),

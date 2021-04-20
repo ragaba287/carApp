@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_car_service/screens/Profile.dart';
+import 'package:flutter_application_car_service/screens/myorders.dart';
 import 'package:flutter_application_car_service/screens/newserves.dart';
 import 'package:flutter_application_car_service/screens/points.dart';
 import 'package:flutter_application_car_service/screens/reveiw.dart';
@@ -20,6 +22,8 @@ class _CarState extends State<Car> {
       key: _scaffoldKey,
       body: SafeArea(
         child: Container(
+          width: double.infinity,
+          height: double.infinity,
           decoration: BoxDecoration(
               image: DecorationImage(
                   image: AssetImage('asset/backimage.png'), fit: BoxFit.cover)),
@@ -49,66 +53,7 @@ class _CarState extends State<Car> {
                   SizedBox(
                     height: 20,
                   ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * .20,
-                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 3),
-                    padding: EdgeInsets.only(right: 10, left: 10, top: 40),
-                    width: MediaQuery.of(context).size.width * .97,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: 60,
-                          width: 60,
-                          padding: EdgeInsets.all(30),
-                          decoration: BoxDecoration(
-                              color: Colors.amber,
-                              borderRadius: BorderRadius.circular(50),
-                              border:
-                                  Border.all(width: 3, color: Colors.black)),
-                        ),
-                        Expanded(
-                          child: Column(children: [
-                            ListTile(
-                              leading: Text(
-                                'Amar rezk',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                              title: Row(
-                                children: [
-                                  IconButton(
-                                    color: Colors.blue[900],
-                                    onPressed: () {},
-                                    icon: Icon(Icons.call),
-                                  ),
-                                  IconButton(
-                                      onPressed: () {},
-                                      color: Colors.blue[900],
-                                      icon: Icon(
-                                        Icons.message,
-                                      )),
-                                ],
-                              ),
-                            ),
-                            TextButton(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text('my orders'),
-                                  Icon(Icons.arrow_forward)
-                                ],
-                              ),
-                              onPressed: () {},
-                            ),
-                          ]),
-                        ),
-                      ],
-                    ),
-                  ),
+                  headerProfile(context),
                   SizedBox(
                     height: 20,
                   ),
@@ -314,4 +259,97 @@ class _CarState extends State<Car> {
       ),
     );
   }
+}
+
+Widget headerProfile(BuildContext context) {
+  return Container(
+    height: MediaQuery.of(context).size.height * .20,
+    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 3),
+    padding: EdgeInsets.only(right: 10, left: 10, top: 40),
+    width: MediaQuery.of(context).size.width * .97,
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(30),
+    ),
+    child: InkWell(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (_) {
+          return Profile();
+        }));
+      },
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Hero(
+            tag: "profile_picture",
+            child: Container(
+              height: 60,
+              width: 60,
+              padding: EdgeInsets.all(30),
+              decoration: BoxDecoration(
+                  color: Colors.amber,
+                  borderRadius: BorderRadius.circular(50),
+                  border: Border.all(width: 3, color: Colors.black)),
+            ),
+          ),
+          Expanded(
+            child: Column(children: [
+              ListTile(
+                leading: Text(
+                  'Amar rezk',
+                  style: TextStyle(color: Colors.black),
+                ),
+                title: Row(
+                  children: [
+                    IconButton(
+                      color: Colors.blue[900],
+                      onPressed: () {},
+                      icon: Icon(Icons.call),
+                    ),
+                    IconButton(
+                        onPressed: () {},
+                        color: Colors.blue[900],
+                        icon: Icon(
+                          Icons.message,
+                        )),
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                        color: Color.fromRGBO(254, 112, 98, 100),
+                        borderRadius: BorderRadius.circular(40)),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return MyOrders();
+                        }));
+                      },
+                      child: Row(
+                        children: [
+                          Text(
+                            'my orders',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          Icon(
+                            Icons.arrow_forward,
+                            color: Colors.white,
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ]),
+          ),
+        ],
+      ),
+    ),
+  );
 }
