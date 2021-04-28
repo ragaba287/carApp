@@ -1,10 +1,10 @@
-import 'package:dio/dio.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_car_service/screens/authentication.dart';
+import 'package:flutter_application_car_service/screens/home.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import '../dioHelper.dart';
+import '../screens/CarDetails.dart';
+import '../screens/authentication.dart';
 import 'package:flutter_svg/svg.dart';
-
-import 'home.dart';
 
 class Singup extends StatefulWidget {
   @override
@@ -14,6 +14,7 @@ class Singup extends StatefulWidget {
 class _SingupState extends State<Singup> {
   var _formKey = GlobalKey<FormState>();
   String name, password, email, phone;
+  DioHelper _dioHelper = DioHelper();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -164,7 +165,7 @@ class _SingupState extends State<Singup> {
                                 phone = a;
                               });
                             },
-                            obscureText: true,
+                            // obscureText: true,
                             decoration: InputDecoration(
                               prefixIcon: Icon(Icons.mobile_friendly),
                               hintText: 'mobile number',
@@ -183,8 +184,42 @@ class _SingupState extends State<Singup> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30)),
                               elevation: 9,
-                              onPressed: () {
-                                _submit();
+                              onPressed: () async {
+                                if (!_formKey.currentState.validate()) {
+                                  return;
+                                }
+                                _dioHelper
+                                    .createUser(
+                                  name: name,
+                                  email: email,
+                                  password: password,
+                                  phone: phone,
+                                )
+                                    .then((value) {
+                                  print(value);
+
+                                  String msg = value.data['msg'];
+                                  Color bgColor = Colors.red;
+                                  if (msg == 'auth-success-addrecord') {
+                                    msg = 'Created Successfully';
+                                    bgColor = Colors.green;
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Car(
+                                                  id: value.data['users']['id'],
+                                                )));
+                                  }
+                                  Fluttertoast.showToast(
+                                      msg: msg,
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.BOTTOM,
+                                      timeInSecForIosWeb: 3,
+                                      backgroundColor: bgColor,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0);
+                                });
+                                print('done');
                                 //EasyLocalization.of(context).locale =Locale('en', 'US');
                               },
                               color: Colors.red[400],
@@ -307,22 +342,5 @@ class _SingupState extends State<Singup> {
         ),
       ),
     );
-  }
-
-  Future<void> _submit() async {
-    final isValid = _formKey.currentState.validate();
-    if (!isValid) {
-      return;
-    }
-    Dio dio = Dio();
-    String base_url =
-        "http://10.0.0.0/laundry/api/v1/users/create?api_password= RjikEbtcypXTao7a38NWb";
-    var response = await dio.post(base_url, data: {
-      'name': name,
-      'email': email,
-      'phone': phone,
-      'password': password
-    });
-    print(response);
   }
 }

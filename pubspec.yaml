@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -35,9 +35,8 @@ dependencies:
   smart_select: ^4.3.2
   easy_localization: ^2.3.3+1
 
-
   dio: ^3.0.10
-
+  fluttertoast: ^8.0.6
 
 dev_dependencies:
   flutter_test:
@@ -48,7 +47,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -70,7 +68,7 @@ flutter:
     - asset/myorder.png
     - asset/Lan/en-US.json
     - asset/Lan/ar-SA.json
-  
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
@@ -83,7 +81,6 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-  
     - family: Cairo-Bold
       fonts:
         - asset: asset/fonts/Cairo-Bold.ttf
@@ -104,7 +101,6 @@ flutter:
       fonts:
         - asset: asset/fonts/Cairo-SemiBold.ttf
           weight: 600
-
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

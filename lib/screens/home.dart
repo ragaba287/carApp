@@ -1,20 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_car_service/screens/Profile.dart';
-import 'package:flutter_application_car_service/screens/myorders.dart';
-import 'package:flutter_application_car_service/screens/newserves.dart';
-import 'package:flutter_application_car_service/screens/points.dart';
-import 'package:flutter_application_car_service/screens/reveiw.dart';
-import 'package:flutter_application_car_service/widget/appBaar.dart';
-import 'package:flutter_application_car_service/widget/drawer.dart';
+import '../Model/UserCreate.dart';
+import '../dioHelper.dart';
+import '../screens/Profile.dart';
+import '../screens/myorders.dart';
+import '../screens/newserves.dart';
+import '../screens/points.dart';
+import '../screens/reveiw.dart';
+import '../widget/appBaar.dart';
+import '../widget/drawer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+DioHelper _dioHelper = DioHelper();
+Users _users = Users();
+
 class Car extends StatefulWidget {
+  Car({this.id = 1});
+  final int id;
+
   @override
   _CarState createState() => _CarState();
 }
 
 class _CarState extends State<Car> {
+  @override
+  void initState() {
+    super.initState();
+
+    _dioHelper.showById(widget.id).then(
+          (value) => setState(
+            () {
+              _users.name = value.data['user']['name'];
+              _users.phone = value.data['user']['phone'];
+              _users.email = value.data['user']['email'];
+            },
+          ),
+        );
+  }
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,9 +57,10 @@ class _CarState extends State<Car> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Container(
-                      child: Baar(
-                    onpress: () => _scaffoldKey.currentState.openEndDrawer(),
+                  Container(child: Baar(
+                    onpress: () async {
+                      _scaffoldKey.currentState.openEndDrawer();
+                    },
                   )),
                   SizedBox(
                     height: 20,
@@ -43,7 +68,7 @@ class _CarState extends State<Car> {
                   Container(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      'Welcom back\n ammar rezk',
+                      'Welcom back\n${_users.name ?? ''}',
                       style: TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.w700,
@@ -53,7 +78,7 @@ class _CarState extends State<Car> {
                   SizedBox(
                     height: 20,
                   ),
-                  headerProfile(context),
+                  headerProfile(context, _users),
                   SizedBox(
                     height: 20,
                   ),
@@ -261,7 +286,7 @@ class _CarState extends State<Car> {
   }
 }
 
-Widget headerProfile(BuildContext context) {
+Widget headerProfile(BuildContext context, Users users) {
   return Container(
     height: MediaQuery.of(context).size.height * .20,
     margin: EdgeInsets.symmetric(horizontal: 20, vertical: 3),
@@ -274,7 +299,9 @@ Widget headerProfile(BuildContext context) {
     child: InkWell(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return Profile();
+          return Profile(
+            users: users,
+          );
         }));
       },
       child: Row(
@@ -296,7 +323,7 @@ Widget headerProfile(BuildContext context) {
             child: Column(children: [
               ListTile(
                 leading: Text(
-                  'Amar rezk',
+                  _users.name ?? '',
                   style: TextStyle(color: Colors.black),
                 ),
                 title: Row(
@@ -325,10 +352,10 @@ Widget headerProfile(BuildContext context) {
                         borderRadius: BorderRadius.circular(40)),
                     child: InkWell(
                       onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return MyOrders();
-                        }));
+                        // Navigator.push(context,
+                        //     MaterialPageRoute(builder: (context) {
+                        //   return MyOrders();
+                        // }));
                       },
                       child: Row(
                         children: [

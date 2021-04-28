@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_car_service/dioHelper.dart';
 import 'package:flutter_application_car_service/screens/singup.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 void main() {
+  DioHelper.init();
   runApp(
     EasyLocalization(
         supportedLocales: [Locale('en', 'US'), Locale('ar', 'SA')],

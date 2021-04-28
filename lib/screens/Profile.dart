@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_car_service/screens/CarDetails.dart';
-import 'package:flutter_application_car_service/screens/myorders.dart';
-import 'package:flutter_application_car_service/screens/points.dart';
-import 'package:flutter_application_car_service/widget/appBaar.dart';
-import 'package:flutter_application_car_service/widget/drawer.dart';
+import '../Model/UserCreate.dart';
+import '../dioHelper.dart';
+import '../screens/CarDetails.dart';
+import '../screens/myorders.dart';
+import '../widget/appBaar.dart';
+import '../widget/drawer.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'newserves.dart';
+DioHelper _dioHelper = DioHelper();
 
 class Profile extends StatefulWidget {
+  Profile({this.users});
+  final Users users;
   @override
   _ProfileState createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  @override
+  void initState() {
+    super.initState();
+  }
 
   Future<void> _edietprofile() async {
     return showDialog<void>(
@@ -86,7 +93,7 @@ class _ProfileState extends State<Profile> {
                           ),
                         ),
                         Text(
-                          'ammar rezk',
+                          widget.users.name,
                           style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.w700,
@@ -119,7 +126,7 @@ class _ProfileState extends State<Profile> {
                             height: 10,
                           ),
                           Text(
-                            "01280816239",
+                            widget.users.phone ?? '',
                             style: TextStyle(color: Colors.blue.shade500),
                           ),
                           SizedBox(
@@ -135,7 +142,7 @@ class _ProfileState extends State<Profile> {
                             height: 10,
                           ),
                           Text(
-                            "Email@example.com",
+                            widget.users.email ?? '',
                             style: TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold,
